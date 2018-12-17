@@ -22,4 +22,5 @@ RUN echo '<IfModule mod_fastcgi.c>\n\
 </IfModule>\n'\
 > /etc/apache2/mods-enabled/fastcgi.conf
 RUN service php5-fpm start
+RUN php5enmod mcrypt
 CMD bash -c 'sleep 1 && service php5-fpm restart & apachectl -DFOREGROUND'
