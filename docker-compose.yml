@@ -1,0 +1,27 @@
+version: '3'
+services:
+    env:
+      build:
+        context: .
+      volumes:
+      - "./sites-enabled:/etc/apache2/sites-enabled"
+      - "../dockvine_toolbar:/var/www/dockvine/dockvine_toolbar"
+      # NOTE: the virtual host mentions a "public" folder, which I can't see in
+      # the `wx` repository
+      - "../wx:/var/www/dockvine/wix"
+      - "../dockvine_corp:/var/www/dockvine/dockvine_corp"
+      - "../dockvine_api:/var/www/dockvine/dockvine_api"
+      ports:
+      - "80:80"
+      extra_hosts:
+      - "toolbar-local.dockvine.com:127.0.0.1"
+      - "wx-local.dockvine.com:127.0.0.1"
+      - "www-local.dockvine.com:127.0.0.1"
+      - "api-local.dockvine.com:127.0.0.1"
+    db:
+      image: mysql:5.5
+      environment:
+        MYSQL_DATABASE: dockvine
+        MYSQL_USER: dockvine
+        MYSQL_PASSWORD: 123
+        MYSQL_ROOT_PASSWORD: 123123
