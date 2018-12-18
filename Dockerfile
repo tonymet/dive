@@ -3,7 +3,7 @@ FROM ubuntu:14.04
 RUN apt update
 RUN apt install -y tzdata
 RUN dpkg-reconfigure -f noninteractive tzdata
-RUN apt install -y curl
+RUN apt install -y curl git
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
 RUN apt install -y nodejs
 RUN apt install -y apache2
