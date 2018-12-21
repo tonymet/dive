@@ -7,7 +7,7 @@ RUN apt install -y curl git
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
 RUN apt install -y nodejs
 RUN apt install -y apache2
-RUN apt install -y libapache2-mod-fastcgi php5-fpm php5-mysql php5-mcrypt php5-cli
+RUN apt install -y libapache2-mod-fastcgi php5-fpm php5-mysql php5-mcrypt php5-cli php5-curl
 RUN curl -s https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
 RUN a2enmod actions

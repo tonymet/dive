@@ -7,15 +7,15 @@ services:
       - "./sites-enabled:/etc/apache2/sites-enabled"
       - "../dockvine_toolbar:/var/www/dockvine/dockvine_toolbar"
       # NOTE: the virtual host mentions a "public" folder, which I can't see in
-      # the `wx` repository
-      - "../wx:/var/www/dockvine/wix"
+      # the `wix` repository
+      - "../wix:/var/www/dockvine/wix"
       - "../dockvine_corp:/var/www/dockvine/dockvine_corp"
       - "../dockvine_api:/var/www/dockvine/dockvine_api"
       ports:
       - "80:80"
       extra_hosts:
       - "toolbar-local.dockvine.com:127.0.0.1"
-      - "wx-local.dockvine.com:127.0.0.1"
+      - "wix-local.dockvine.com:127.0.0.1"
       - "www-local.dockvine.com:127.0.0.1"
       - "api-local.dockvine.com:127.0.0.1"
     db:
