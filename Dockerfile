@@ -15,6 +15,7 @@ RUN a2enmod proxy
 RUN a2enmod proxy_http
 RUN a2enmod proxy_fcgi
 RUN a2enmod rewrite
+RUN a2enmod ssl
 RUN echo '<IfModule mod_fastcgi.c>\n\
     AddType application/x-httpd-fastphp5 .php\n\
     Action application/x-httpd-fastphp5 /php5-fcgi\n\
@@ -28,3 +29,9 @@ RUN echo '<IfModule mod_fastcgi.c>\n\
 RUN service php5-fpm start
 RUN php5enmod mcrypt
 CMD bash -c 'sleep 1 && service php5-fpm restart & apachectl -DFOREGROUND'
+
+# Setting up ssl certs 
+# https://www.sslshopper.com/article-how-to-create-and-install-an-apache-self-signed-certificate.html
+# Common Name should match URL 
+# Already stored certs and private keys in ssl folder. On your host machine just add the crt files to your keychain
+# and force trust

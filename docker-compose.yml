@@ -13,6 +13,7 @@ services:
       - "../dockvine_api:/var/www/dockvine/dockvine_api"
       ports:
       - "80:80"
+      - "443:443"
       extra_hosts:
       - "toolbar-local.dockvine.com:127.0.0.1"
       - "wix-local.dockvine.com:127.0.0.1"
