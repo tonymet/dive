@@ -17,3 +17,10 @@ Two containers will be started, one from the above image, and one from a MySQL i
 cd ..
 docker build -f dockvine_env/Dockerfile-complete . -t dockvine
 ```
+
+## TESTING
+
+```
+curl -v -H"Host:toolbar-local.dockvine.com" http://cloud9-env1.tonymet.com:8080/widget/
+curl -v -H"Host:wix-local.dockvine.com" http://cloud9-env1.tonymet.com:8080/widget/
+```
