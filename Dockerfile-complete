@@ -4,6 +4,9 @@ WORKDIR /var/www/dockvine/dockvine_toolbar
 RUN sh build.sh
 
 FROM php:5-apache-jessie
-RUN curl -s https://getcomposer.org/installer | php
+RUN curl -sS https://getcomposer.org/installer | \
+	php -- --install-dir=/usr/local/bin --filename=composer
 COPY --from=build /var/www/dockvine /var/www/dockvine
+WORKDIR /var/www/dockvine/dockvine_corp
+RUN sh build.sh
 COPY dockvine_env/sites-enabled /etc/apache2/sites-enabled
