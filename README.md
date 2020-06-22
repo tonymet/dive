@@ -22,6 +22,14 @@ cd dockvine_env
 docker build -f dockvine_env/Dockerfile-complete . -t dockvine
 ```
 
+## RUNNING Image
+
+```
+# will listen locally on 8080 e.g. http://127.0.0.1:8080
+# see TESTING cmds
+docker run -p8080:80 dockvine
+```
+
 ## TESTING
 
 ```
