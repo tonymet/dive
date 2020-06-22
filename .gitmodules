@@ -1,0 +1,12 @@
+[submodule "dockvine_api"]
+	path = dockvine_api
+	url = git@bitbucket.org:boomtony/dockvine_api.git
+[submodule "wix"]
+	path = wix
+	url = git@bitbucket.org:boomtony/wix.git
+[submodule "dockvine_toolbar"]
+	path = dockvine_toolbar
+	url = git@bitbucket.org:boomtony/dockvine_toolbar.git
+[submodule "dockvine_corp"]
+	path = dockvine_corp
+	url = git@bitbucket.org:boomtony/dockvine_corp.git
