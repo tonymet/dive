@@ -17,4 +17,7 @@ COPY --from=build /var/www/dockvine /var/www/dockvine
 COPY dockvine_corp /var/www/dockvine/dockvine_corp
 WORKDIR /var/www/dockvine/dockvine_corp
 RUN sh build.sh
-COPY dockvine_env/sites-enabled /etc/apache2/sites-enabled
+COPY dockvine_api /var/www/dockvine/dockvine_api
+WORKDIR /var/www/dockvine/dockvine_api
+RUN sh build.sh
+COPY sites-enabled /etc/apache2/sites-enabled
