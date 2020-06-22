@@ -1,28 +1,23 @@
-FROM ubuntu:14.04
+FROM node:10-alpine AS build
+COPY dockvine_toolbar  /var/www/dockvine/dockvine_toolbar
+WORKDIR /var/www/dockvine/dockvine_toolbar
+RUN sh build.sh
+COPY wix  /var/www/dockvine/wix
+WORKDIR /var/www/dockvine/wix
+RUN sh build.sh
 
-RUN apt update
-RUN apt install -y tzdata
-RUN dpkg-reconfigure -f noninteractive tzdata
-RUN apt install -y curl git
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
-RUN apt install -y nodejs
-RUN apt install -y apache2
-RUN apt install -y libapache2-mod-fastcgi php5-fpm php5-mysql php5-mcrypt php5-cli php5-curl
-RUN curl -s https://getcomposer.org/installer | php
-RUN mv composer.phar /usr/local/bin/composer
-RUN a2enmod actions
-RUN a2enmod proxy
-RUN a2enmod proxy_http
-RUN a2enmod proxy_fcgi
-RUN a2enmod rewrite
-RUN a2enmod ssl
-COPY etc /etc
-RUN service php5-fpm start
-RUN php5enmod mcrypt
-CMD bash -c 'sleep 1 && service php5-fpm restart & apachectl -DFOREGROUND'
-
-# Setting up ssl certs 
-# https://www.sslshopper.com/article-how-to-create-and-install-an-apache-self-signed-certificate.html
-# Common Name should match URL 
-# Already stored certs and private keys in ssl folder. On your host machine just add the crt files to your keychain
-# and force trust
+FROM php:5-apache-jessie
+RUN curl -sS https://getcomposer.org/installer | \
+	php -- --install-dir=/usr/local/bin --filename=composer \
+	&& apt-get update \
+	&& apt-get install -y git libmcrypt-dev\
+	&& docker-php-ext-install -j$(nproc) iconv mcrypt \
+	&& a2enmod ssl
+COPY --from=build /var/www/dockvine /var/www/dockvine
+COPY dockvine_corp /var/www/dockvine/dockvine_corp
+WORKDIR /var/www/dockvine/dockvine_corp
+RUN sh build.sh
+COPY dockvine_api /var/www/dockvine/dockvine_api
+WORKDIR /var/www/dockvine/dockvine_api
+RUN sh build.sh
+COPY sites-enabled /etc/apache2/sites-enabled
