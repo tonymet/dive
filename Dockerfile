@@ -16,16 +16,7 @@ RUN a2enmod proxy_http
 RUN a2enmod proxy_fcgi
 RUN a2enmod rewrite
 RUN a2enmod ssl
-RUN echo '<IfModule mod_fastcgi.c>\n\
-    AddType application/x-httpd-fastphp5 .php\n\
-    Action application/x-httpd-fastphp5 /php5-fcgi\n\
-    Alias /php5-fcgi /usr/lib/cgi-bin/php5-fcgi\n\
-    FastCgiExternalServer /usr/lib/cgi-bin/php5-fcgi -socket /var/run/php5-fpm.sock -pass-header Authorization\n\
-    <Directory /usr/lib/cgi-bin>\n\
-        Require all granted\n\
-    </Directory>\n\
-</IfModule>\n'\
-> /etc/apache2/mods-enabled/fastcgi.conf
+COPY etc /etc
 RUN service php5-fpm start
 RUN php5enmod mcrypt
 CMD bash -c 'sleep 1 && service php5-fpm restart & apachectl -DFOREGROUND'
