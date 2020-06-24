@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+    dockvine:
+        volumes:
+            - '/home/ec2-user/dockvine/dockvine_env/log:/var/log/'
+            - '/home/ec2-user/dockvine/dockvine_env/storage:/var/www/dockvine/dockvine_api/app/storage'
+        ports:
+            - 80:80
+        container_name: dockvine
+        image: dockvine

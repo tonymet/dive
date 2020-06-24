@@ -27,7 +27,7 @@ docker build -f dockvine_env/Dockerfile-complete . -t dockvine
 ```
 # will listen locally on 8080 e.g. http://127.0.0.1:8080
 # see TESTING cmds
-docker run -p8080:80 dockvine
+docker run -d -v`pwd`/log:/var/log/ -p80:80  dockvine  --name=dockvine
 ```
 
 ## TESTING
@@ -35,4 +35,5 @@ docker run -p8080:80 dockvine
 ```
 curl -v -H"Host:toolbar-local.dockvine.com" http://cloud9-env1.tonymet.com:8080/widget/
 curl -v -H"Host:wix-local.dockvine.com" http://cloud9-env1.tonymet.com:8080/widget/
+curl -v -H"Host:www-local.dockvine.com" http://cloud9-env1.tonymet.com:8080/widget/
 ```

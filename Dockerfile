@@ -12,7 +12,7 @@ RUN curl -sS https://getcomposer.org/installer | \
 	&& apt-get update \
 	&& apt-get install -y git libmcrypt-dev zlib1g-dev\
 	&& docker-php-ext-install -j$(nproc) iconv mcrypt zip \
-	&& a2enmod ssl \
+	&& a2enmod ssl rewrite\
 	&& apt-get clean autoclean \
 	&& apt-get autoremove --yes \
 	&& rm -rf /var/lib/{apt,dpkg,cache,log}/
