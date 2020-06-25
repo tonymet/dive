@@ -1,4 +1,5 @@
 FROM node:10-alpine AS build
+ENV DOCKER_BUILD=1
 COPY dockvine_toolbar  /var/www/dockvine/dockvine_toolbar
 WORKDIR /var/www/dockvine/dockvine_toolbar
 RUN sh build.sh
@@ -19,8 +20,10 @@ RUN curl -sS https://getcomposer.org/installer | \
 COPY --from=build /var/www/dockvine /var/www/dockvine
 COPY dockvine_corp /var/www/dockvine/dockvine_corp
 WORKDIR /var/www/dockvine/dockvine_corp
-RUN sh build.sh
+RUN sh build.sh \
+	&& rm -rf /root/.composer/cache
 COPY dockvine_api /var/www/dockvine/dockvine_api
 WORKDIR /var/www/dockvine/dockvine_api
-RUN sh build.sh
+RUN sh build.sh \
+	&& rm -rf /root/.composer/cache
 COPY sites-enabled /etc/apache2/sites-enabled
