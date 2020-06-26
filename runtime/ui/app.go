@@ -7,6 +7,7 @@ import (
 	"github.com/wagoodman/dive/runtime/ui/layout/compound"
 	"sync"
 	"golang.org/x/sys/unix"
+	"github.com/nsf/termbox-go"
 	"github.com/jroimartin/gocui"
 	"github.com/sirupsen/logrus"
 	"github.com/wagoodman/dive/dive/filetree"
@@ -132,6 +133,8 @@ func (a *app) quit() error {
 }
 
 func (a *app) susp() error {
+	termbox.Flush();
+	termbox.Close();
 	unix.Kill(unix.Getpid(), unix.SIGSTOP);
 	return nil;
 }
