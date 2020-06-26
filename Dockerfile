@@ -25,5 +25,9 @@ RUN sh build.sh \
 COPY dockvine_api /var/www/dockvine/dockvine_api
 WORKDIR /var/www/dockvine/dockvine_api
 RUN sh build.sh \
-	&& rm -rf /root/.composer/cache
+	&& rm -rf /root/.composer/cache \
+	# remove cashier binaries
+	&& rm  -f /var/www/dockvine/dockvine_api/vendor/laravel/cashier/src/Laravel/Cashier/bin/linux-i686/phantomjs \
+	&& rm  -f /var/www/dockvine/dockvine_api/vendor/laravel/cashier/src/Laravel/Cashier/bin/windows/phantomjs.exe \
+	&& rm  -f /var/www/dockvine/dockvine_api/vendor/laravel/cashier/src/Laravel/Cashier/bin/macosx/phantomjs
 COPY sites-enabled /etc/apache2/sites-enabled
