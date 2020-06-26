@@ -108,6 +108,7 @@ func run(enableUi bool, options Options, imageResolver image.Resolver, events ev
 			time.Sleep(100 * time.Millisecond)
 
 			err = ui.Run(analysis, treeStack)
+			// close(events)
 			if err != nil {
 				events.exitWithError(err)
 				return

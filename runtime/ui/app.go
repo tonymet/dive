@@ -133,6 +133,7 @@ func (a *app) quit() error {
 }
 
 func (a *app) susp() error {
+	termbox.Clear(termbox.ColorBlack,termbox.ColorBlack);
 	termbox.Flush();
 	termbox.Close();
 	unix.Kill(unix.Getpid(), unix.SIGSTOP);
