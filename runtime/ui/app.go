@@ -6,7 +6,7 @@ import (
 	"github.com/wagoodman/dive/runtime/ui/layout"
 	"github.com/wagoodman/dive/runtime/ui/layout/compound"
 	"sync"
-
+	"golang.org/x/sys/unix"
 	"github.com/jroimartin/gocui"
 	"github.com/sirupsen/logrus"
 	"github.com/wagoodman/dive/dive/filetree"
@@ -71,6 +71,11 @@ func newApp(gui *gocui.Gui, analysis *image.AnalysisResult, cache filetree.Compa
 				Display:    "Quit",
 			},
 			{
+				ConfigKeys: []string{"keybinding.susp"},
+				OnAction:   appSingleton.susp,
+				Display:    "Suspend",
+			},
+			{
 				ConfigKeys: []string{"keybinding.toggle-view"},
 				OnAction:   controller.ToggleView,
 				Display:    "Switch view",
@@ -124,6 +129,11 @@ func (a *app) quit() error {
 	// onExit()
 
 	return gocui.ErrQuit
+}
+
+func (a *app) susp() error {
+	unix.Kill(unix.Getpid(), unix.SIGSTOP);
+	return nil;
 }
 
 // Run is the UI entrypoint.
