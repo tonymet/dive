@@ -2,6 +2,9 @@ package runtime
 
 import (
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/dustin/go-humanize"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/afero"
@@ -12,8 +15,6 @@ import (
 	"github.com/wagoodman/dive/runtime/export"
 	"github.com/wagoodman/dive/runtime/ui"
 	"github.com/wagoodman/dive/utils"
-	"os"
-	"time"
 )
 
 func run(enableUi bool, options Options, imageResolver image.Resolver, events eventChannel, filesystem afero.Fs) {
@@ -108,6 +109,7 @@ func run(enableUi bool, options Options, imageResolver image.Resolver, events ev
 			time.Sleep(100 * time.Millisecond)
 
 			err = ui.Run(options.Image, analysis, treeStack)
+			// close(events)
 			if err != nil {
 				events.exitWithError(err)
 				return

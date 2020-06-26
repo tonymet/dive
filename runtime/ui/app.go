@@ -3,14 +3,15 @@ package ui
 import (
 	"sync"
 
+	"github.com/awesome-gocui/gocui"
+	"github.com/nsf/termbox-go"
+	"github.com/sirupsen/logrus"
+	"github.com/wagoodman/dive/dive/filetree"
 	"github.com/wagoodman/dive/dive/image"
 	"github.com/wagoodman/dive/runtime/ui/key"
 	"github.com/wagoodman/dive/runtime/ui/layout"
 	"github.com/wagoodman/dive/runtime/ui/layout/compound"
-
-	"github.com/awesome-gocui/gocui"
-	"github.com/sirupsen/logrus"
-	"github.com/wagoodman/dive/dive/filetree"
+	"golang.org/x/sys/unix"
 )
 
 const debug = false
@@ -72,6 +73,11 @@ func newApp(gui *gocui.Gui, imageName string, analysis *image.AnalysisResult, ca
 				Display:    "Quit",
 			},
 			{
+				ConfigKeys: []string{"keybinding.susp"},
+				OnAction:   appSingleton.susp,
+				Display:    "Suspend",
+			},
+			{
 				ConfigKeys: []string{"keybinding.toggle-view"},
 				OnAction:   controller.ToggleView,
 				Display:    "Switch view",
@@ -125,6 +131,14 @@ func (a *app) quit() error {
 	// onExit()
 
 	return gocui.ErrQuit
+}
+
+func (a *app) susp() error {
+	termbox.Clear(termbox.ColorBlack, termbox.ColorBlack)
+	termbox.Flush()
+	termbox.Close()
+	unix.Kill(unix.Getpid(), unix.SIGSTOP)
+	return nil
 }
 
 // Run is the UI entrypoint.

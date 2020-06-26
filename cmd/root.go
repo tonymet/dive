@@ -78,6 +78,7 @@ func initConfig() {
 	viper.SetDefault("log.enabled", false)
 	// keybindings: status view / global
 	viper.SetDefault("keybinding.quit", "ctrl+c")
+	viper.SetDefault("keybinding.susp", "ctrl+z")
 	viper.SetDefault("keybinding.toggle-view", "tab")
 	viper.SetDefault("keybinding.filter-files", "ctrl+f, ctrl+slash")
 	// keybindings: layer view
