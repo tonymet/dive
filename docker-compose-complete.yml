@@ -6,6 +6,7 @@ services:
             redis: dockvine_env_redis_1
         volumes:
             - '/home/ec2-user/dockvine/dockvine_env/log:/var/log/'
+            - '/home/ec2-user/dockvine/dockvine_env/dockvine_api:/var/www/dockvine/dockvine_api'
             - '/home/ec2-user/dockvine/dockvine_env/storage:/var/www/dockvine/dockvine_api/app/storage'
         ports:
             - 80:80
@@ -16,6 +17,8 @@ services:
     mysql:
         environment:
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+            - '/home/ec2-user/dockvine/dockvine_env/mysql:/var/lib/mysql'
         image: mysql:5.7
         command: --skip-grant-tables
         networks:
