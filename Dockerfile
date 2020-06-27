@@ -11,8 +11,8 @@ FROM php:5-apache-jessie
 RUN curl -sS https://getcomposer.org/installer | \
 	php -- --install-dir=/usr/local/bin --filename=composer \
 	&& apt-get update \
-	&& apt-get install -y git zip libmcrypt-dev zlib1g-dev\
-	&& docker-php-ext-install -j$(nproc) iconv mcrypt zip \
+	&& apt-get install -y git libmcrypt-dev unzip zlib1g-dev\
+	&& docker-php-ext-install -j$(nproc) iconv mcrypt zip pdo_mysql \
 	&& a2enmod ssl rewrite\
 	&& apt-get clean autoclean \
 	&& apt-get autoremove --yes \
@@ -22,9 +22,8 @@ COPY dockvine_corp /var/www/dockvine/dockvine_corp
 WORKDIR /var/www/dockvine/dockvine_corp
 RUN sh build.sh \
 	&& rm -rf /root/.composer/cache
-COPY dockvine_api/composer.lock dockvine_api/composer.json \
-	dockvine_api/build.sh \
-	/var/www/dockvine/dockvine_api/
+ENV mysql=mysql redis=redis
+COPY dockvine_api /var/www/dockvine/dockvine_api
 WORKDIR /var/www/dockvine/dockvine_api
 RUN sh build.sh \
 	&& rm -rf /root/.composer/cache \
@@ -32,5 +31,4 @@ RUN sh build.sh \
 	&& rm  -f /var/www/dockvine/dockvine_api/vendor/laravel/cashier/src/Laravel/Cashier/bin/linux-i686/phantomjs \
 	&& rm  -f /var/www/dockvine/dockvine_api/vendor/laravel/cashier/src/Laravel/Cashier/bin/windows/phantomjs.exe \
 	&& rm  -f /var/www/dockvine/dockvine_api/vendor/laravel/cashier/src/Laravel/Cashier/bin/macosx/phantomjs
-COPY dockvine_api/ /var/www/dockvine/dockvine_api
 COPY sites-enabled /etc/apache2/sites-enabled

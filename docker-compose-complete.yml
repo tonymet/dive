@@ -1,6 +1,9 @@
 version: '3.3'
 services:
     dockvine:
+        environment:
+            mysql: dockvine_env_mysql_1
+            redis: dockvine_env_redis_1
         volumes:
             - '/home/ec2-user/dockvine/dockvine_env/log:/var/log/'
             - '/home/ec2-user/dockvine/dockvine_env/storage:/var/www/dockvine/dockvine_api/app/storage'
@@ -11,7 +14,10 @@ services:
         networks:
            - default
     mysql:
-        image: mysql
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        image: mysql:5.7
+        command: --skip-grant-tables
         networks:
            - default
     redis:
