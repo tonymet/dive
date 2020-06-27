@@ -11,7 +11,7 @@ FROM php:5-apache-jessie
 RUN curl -sS https://getcomposer.org/installer | \
 	php -- --install-dir=/usr/local/bin --filename=composer \
 	&& apt-get update \
-	&& apt-get install -y git libmcrypt-dev zlib1g-dev\
+	&& apt-get install -y git zip libmcrypt-dev zlib1g-dev\
 	&& docker-php-ext-install -j$(nproc) iconv mcrypt zip \
 	&& a2enmod ssl rewrite\
 	&& apt-get clean autoclean \
