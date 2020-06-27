@@ -8,3 +8,14 @@ services:
             - 80:80
         container_name: dockvine
         image: dockvine
+        networks:
+           - default
+    mysql:
+        image: mysql
+        networks:
+           - default
+    redis:
+        image: redis
+        networks:
+           - default
+
