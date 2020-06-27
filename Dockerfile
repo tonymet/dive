@@ -22,7 +22,9 @@ COPY dockvine_corp /var/www/dockvine/dockvine_corp
 WORKDIR /var/www/dockvine/dockvine_corp
 RUN sh build.sh \
 	&& rm -rf /root/.composer/cache
-COPY dockvine_api /var/www/dockvine/dockvine_api
+COPY dockvine_api/composer.lock dockvine_api/composer.json \
+	dockvine_api/build.sh \
+	/var/www/dockvine/dockvine_api/
 WORKDIR /var/www/dockvine/dockvine_api
 RUN sh build.sh \
 	&& rm -rf /root/.composer/cache \
@@ -30,4 +32,5 @@ RUN sh build.sh \
 	&& rm  -f /var/www/dockvine/dockvine_api/vendor/laravel/cashier/src/Laravel/Cashier/bin/linux-i686/phantomjs \
 	&& rm  -f /var/www/dockvine/dockvine_api/vendor/laravel/cashier/src/Laravel/Cashier/bin/windows/phantomjs.exe \
 	&& rm  -f /var/www/dockvine/dockvine_api/vendor/laravel/cashier/src/Laravel/Cashier/bin/macosx/phantomjs
+COPY dockvine_api/ /var/www/dockvine/dockvine_api
 COPY sites-enabled /etc/apache2/sites-enabled
