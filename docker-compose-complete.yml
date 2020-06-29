@@ -10,6 +10,7 @@ services:
             - '/home/ec2-user/dockvine/dockvine_env/storage:/var/www/dockvine/dockvine_api/app/storage'
         ports:
             - 80:80
+            - 443:443
         container_name: dockvine
         image: dockvine
         networks:
