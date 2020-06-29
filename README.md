@@ -37,3 +37,13 @@ curl -v -H"Host:toolbar-local.dockvine.com" http://cloud9-env1.tonymet.com:8080/
 curl -v -H"Host:wix-local.dockvine.com" http://cloud9-env1.tonymet.com:8080/widget/
 curl -v -H"Host:www-local.dockvine.com" http://cloud9-env1.tonymet.com:8080/widget/
 ```
+
+
+## REFERENCE
+
+```
+docker cp dockvine:/var/www/dockvine/dockvine_api/composer.lock .
+docker cp -R dockvine:/var/www/dockvine/dockvine_api/vendor .
+docker cp -r dockvine:/var/www/dockvine/dockvine_api/vendor .
+docker cp  dockvine:/var/www/dockvine/dockvine_api/vendor .
+```
