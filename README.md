@@ -19,16 +19,34 @@ Two containers will be started, one from the above image, and one from a MySQL i
 mkdir docker-2020-06 && cd docker-2020-06
 git clone --recurse-submodules git@bitbucket.org:boomtony/dockvine_env.git -b docker-2020-06
 cd dockvine_env
-docker build -f dockvine_env/Dockerfile-complete . -t dockvine
+docker build . -t dockvine
 ```
 
 ## RUNNING Image
 
+
+#### First Run
+
 ```
-# will listen locally on 8080 e.g. http://127.0.0.1:8080
-# see TESTING cmds
-docker run -d -v`pwd`/log:/var/log/ -p80:80  dockvine  --name=dockvine
+make volumes
+docker-compose -f docker-compose-complete.yml up
+# create the "dockvine db" -- this will be permanent across runs in the `mysql` dir
+make mysql
 ```
+
+#### Subsequent Runs
+```
+docker-compose -f docker-compose-complete.yml up
+```
+
+## STOPPING
+```
+docker-compose down
+#  if you get errors about orphans
+docker-compose down --remove-orphans
+```
+
+
 
 ## TESTING
 

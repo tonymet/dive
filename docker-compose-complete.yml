@@ -4,6 +4,7 @@ services:
         environment:
             mysql: dockvine_env_mysql_1
             redis: dockvine_env_redis_1
+            APP_ENV: local
         volumes:
             - '/home/ec2-user/dockvine/dockvine_env/log:/var/log/'
             - '/home/ec2-user/dockvine/dockvine_env/dockvine_api:/var/www/dockvine/dockvine_api'
