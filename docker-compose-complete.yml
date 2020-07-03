@@ -6,9 +6,10 @@ services:
             redis: dockvine_env_redis_1
             APP_ENV: local
         volumes:
-            - '/home/ec2-user/dockvine/dockvine_env/log:/var/log/'
-            - '/home/ec2-user/dockvine/dockvine_env/dockvine_api:/var/www/dockvine/dockvine_api'
-            - '/home/ec2-user/dockvine/dockvine_env/storage:/var/www/dockvine/dockvine_api/app/storage'
+            - './log:/var/log/'
+            - './dockvine_api:/var/www/dockvine/dockvine_api'
+            - './wix:/var/www/dockvine/wix'
+            - './storage:/var/www/dockvine/dockvine_api/app/storage'
         ports:
             - 80:80
             - 443:443
