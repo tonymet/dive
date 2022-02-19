@@ -1,6 +1,8 @@
 package ui
 
 import (
+	"errors"
+	"fmt"
 	"sync"
 
 	"github.com/awesome-gocui/gocui"
@@ -133,12 +135,14 @@ func (a *app) quit() error {
 	return gocui.ErrQuit
 }
 
+var ErrorSusp = errors.New("suspend")
+
 func (a *app) susp() error {
 	termbox.Clear(termbox.ColorBlack, termbox.ColorBlack)
 	termbox.Flush()
 	termbox.Close()
 	unix.Kill(unix.Getpid(), unix.SIGSTOP)
-	return nil
+	return ErrorSusp
 }
 
 // Run is the UI entrypoint.
@@ -156,9 +160,15 @@ func Run(imageName string, analysis *image.AnalysisResult, treeStack filetree.Co
 		return err
 	}
 
-	if err := g.MainLoop(); err != nil && err != gocui.ErrQuit {
+	for err := g.MainLoop(); err != nil && err != gocui.ErrQuit; {
 		logrus.Error("main loop error: ", err)
-		return err
+		switch err {
+		case gocui.ErrQuit:
+			return err
+		case ErrorSusp:
+			fmt.Println("restore")
+			continue
+		}
 	}
 	return nil
 }
